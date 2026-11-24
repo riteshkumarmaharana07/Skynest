@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SkyNest Co-Living Spaces | Live. Work. Connect.</title>
+  <style>
+    :root {
+      --navy: #0a3673;
+      --blue: #0d5cb6;
+      --light-blue: #4ba3f7;
+      --soft-blue: #eaf2fb;
+      --text-dark: #102542;
+      --text-muted: #3b4f6b;
+      --white: #ffffff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      color: var(--text-dark);
+      background-color: var(--white);
+      line-height: 1.6;
+    }
+
+    /* Accessibility Skip Link & Bar */
+    .skip-link {
+      position: absolute;
+      left: -999px;
+      background: var(--navy);
+      color: var(--white);
+      padding: 8px 16px;
+      z-index: 1000;
+    }
+    .skip-link:focus { left: 10px; top: 10px; }
+
+    .a11y-bar {
+      background: var(--soft-blue);
+      padding: 0.4rem 5%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      border-bottom: 1px solid #d0e1f5;
+    }
+
+    .a11y-bar button {
+      background: var(--white);
+      border: 1px solid var(--navy);
+      color: var(--navy);
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .a11y-bar button:hover, .a11y-bar button:focus {
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    /* Header & Navigation */
+    header {
+      background: var(--white);
+      padding: 0.9rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      box-shadow: 0 2px 10px rgba(10, 54, 115, 0.08);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      text-decoration: none;
+      color: var(--text-dark);
+    }
+
+    .logo-icon {
+      width: 44px;
+      height: 44px;
+      flex-shrink: 0;
+    }
+
+    .logo-text strong {
+      display: block;
+      font-size: 1.4rem;
+      line-height: 1.1;
+      color: var(--text-dark);
+    }
+
+    .logo-text span {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.4rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text-dark);
+      font-weight: 600;
+      padding: 0.4rem 0.2rem;
+      border-bottom: 3px solid transparent;
+      transition: 0.2s;
+      cursor: pointer;
+    }
+
+    nav a:hover, nav a:focus, nav a.active {
+      color: var(--blue);
+      border-bottom-color: var(--blue);
+    }
+
+    .btn-book-nav {
+      background: var(--navy);
+      color: var(--white);
+      border: none;
+      padding: 0.65rem 1.4rem;
+      border-radius: 999px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: 0.2s;
+    }
+
+    .btn-book-nav:hover, .btn-book-nav:focus {
+      background: var(--blue);
+    }
+
+    /* Page Sections (SPA Tabs) */
+    .page-section { display: none; }
+    .page-section.active { display: block; }
+
+    /* Hero Banners */
+    .hero-banner {
+      background: linear-gradient(115deg, #062b61 0%, #0d5cb6 55%, #1a7ae0 100%);
+      color: var(--white);
+      padding: 3rem 5% 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      max-width: 1150px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .hero-banner h1 {
+      font-size: 2.8rem;
+      line-height: 1.15;
+      margin-bottom: 0.8rem;
+    }
+
+    .hero-banner .subtitle {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-banner .tagline {
+      font-size: 1.05rem;
+      opacity: 0.95;
+      margin-bottom: 1.5rem;
+      display: inline-block;
+      border-bottom: 2px solid var(--light-blue);
+      padding-bottom: 0.2rem;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--blue);
+      color: var(--white);
+      border: 2px solid var(--light-blue);
+      padding: 0.75rem 1.6rem;
+      border-radius: 999px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .btn-primary:hover { background: #1470d8; }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      border: 2px solid var(--white);
+      padding: 0.75rem 1.6rem;
+      border-radius: 999px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .btn-outline:hover {
+      background: var(--white);
+      color: var(--navy);
+    }
+
+    .hero-img {
+      width: 100%;
+      height: 290px;
+      object-fit: cover;
+      border-radius: 20px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+      border: 3px solid rgba(255,255,255,0.25);
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1150px;
+      margin: 0 auto;
+      padding: 3rem 5%;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    h2.section-heading {
+      font-size: 2rem;
+      color: var(--text-dark);
+      margin-bottom: 1rem;
+    }
+
+    .content-img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(10, 54, 115, 0.12);
+    }
+
+    /* Feature Icons Row */
+    .mini-features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 1.5rem;
+      text-align: center;
+    }
+
+    .mini-feature-item {
+      padding: 0.8rem;
+      border-right: 1px solid #cbdcf0;
+    }
+    .mini-feature-item:last-child { border-right: none; }
+
+    .mini-feature-item span {
+      display: block;
+      font-size: 1.8rem;
+      margin-bottom: 0.3rem;
+      color: var(--blue);
+    }
+
+    .mini-feature-item strong {
+      font-size: 0.95rem;
+      color: var(--text-dark);
+    }
+
+    .script-banner {
+      text-align: center;
+      font-family: 'Brush Script MT', 'Segoe Script', cursive;
+      font-size: 2.5rem;
+      color: var(--blue);
+      margin: 2rem 0 0.5rem;
+    }
+
+    /* Packages Grid */
+    .packages-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.8rem;
+    }
+
+    .package-card {
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(10, 54, 115, 0.1);
+      overflow: hidden;
+      border: 1px solid #dce8f7;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .package-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .package-body {
+      padding: 1.4rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .package-body h3 {
+      font-size: 1.35rem;
+      color: var(--text-dark);
+      margin-bottom: 0.8rem;
+    }
+
+    .package-body ul {
+      list-style: none;
+      margin-bottom: 1.4rem;
+      flex: 1;
+    }
+
+    .package-body li {
+      margin-bottom: 0.45rem;
+      padding-left: 1.4rem;
+      position: relative;
+      font-size: 0.95rem;
+    }
+
+    .package-body li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--blue);
+      font-weight: bold;
+    }
+
+    .btn-card {
+      background: var(--blue);
+      color: var(--white);
+      border: none;
+      padding: 0.65rem 1.2rem;
+      border-radius: 999px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      font-size: 0.95rem;
+    }
+
+    .btn-card:hover { background: var(--navy); }
+
+    /* Facilities Grid */
+    .facilities-layout {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr;
+      gap: 2rem;
+      align-items: stretch;
+    }
+
+    .facilities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+    }
+
+    .facility-box {
+      background: var(--soft-blue);
+      border-radius: 14px;
+      padding: 1.3rem 0.8rem;
+      text-align: center;
+      border: 1px solid #d2e4f8;
+    }
+
+    .facility-box .icon {
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .facility-box strong {
+      font-size: 0.95rem;
+      color: var(--text-dark);
+    }
+
+    /* Benefits List */
+    .benefits-list {
+      list-style: none;
+      margin-top: 1rem;
+    }
+
+    .benefits-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+
+    .check-circle {
+      background: var(--blue);
+      color: var(--white);
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      flex-shrink: 0;
+    }
+
+    /* Contact Section */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 2.5rem;
+    }
+
+    .pill-header {
+      background: var(--navy);
+      color: var(--white);
+      padding: 0.65rem 1.4rem;
+      border-radius: 999px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 1.4rem;
+      display: inline-block;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .contact-badge {
+      background: var(--navy);
+      color: var(--white);
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .form-group { margin-bottom: 1rem; }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+      font-size: 0.95rem;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1.5px solid #b8d0ec;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-family: inherit;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(13, 92, 182, 0.15);
+    }
+
+    .btn-submit {
+      background: var(--blue);
+      color: var(--white);
+      border: none;
+      padding: 0.85rem 2rem;
+      border-radius: 999px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .btn-submit:hover { background: var(--navy); }
+
+    #formFeedback {
+      margin-top: 1rem;
+      font-weight: 700;
+      padding: 0.75rem;
+      border-radius: 8px;
+      display: none;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--navy);
+      color: var(--white);
+      padding: 1.5rem 5%;
+      margin-top: 2rem;
+    }
+
+    .footer-inner {
+      max-width: 1150px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 0.7rem;
+    }
+
+    .social-links span {
+      background: var(--white);
+      color: var(--navy);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 0.85rem;
+    }
+
+    /* High Contrast Accessibility Mode */
+    body.high-contrast { background: #000; color: #fff; }
+    body.high-contrast header, body.high-contrast .package-card, body.high-contrast .facility-box {
+      background: #111; color: #fff; border-color: #fff;
+    }
+    body.high-contrast nav a, body.high-contrast h2, body.high-contrast h3, body.high-contrast strong, body.high-contrast .logo-text strong, body.high-contrast .logo-text span {
+      color: #ffeb3b;
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 820px) {
+      .hero-grid, .two-col, .facilities-layout, .contact-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero-banner h1 { font-size: 2.2rem; }
+      .mini-features { grid-template-columns: 1fr; }
+      .mini-feature-item { border-right: none; border-bottom: 1px solid #cbdcf0; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <div class="a11y-bar" aria-label="Accessibility Controls">
+    <span>Accessibility:</span>
+    <button type="button" onclick="toggleLargeText()">Large Text</button>
+    <button type="button" onclick="toggleHighContrast()">High Contrast</button>
+  </div>
+
+  <header>
+    <a class="logo" onclick="showPage('home')" href="#home">
+      <svg class="logo-icon" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+        <path d="M8 28L32 10L56 28" stroke="#0a3673" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        <rect x="16" y="30" width="8" height="24" fill="#0d5cb6"/>
+        <rect x="28" y="22" width="10" height="32" fill="#0a3673"/>
+        <rect x="42" y="34" width="8" height="20" fill="#4ba3f7"/>
+      </svg>
+      <div class="logo-text">
+        <strong>SkyNest</strong>
+        <span>Co-Living Spaces</span>
+      </div>
+    </a>
+
+    <nav aria-label="Primary Navigation">
+      <ul>
+        <li><a id="nav-home" class="active" onclick="showPage('home')">Home</a></li>
+        <li><a id="nav-about" onclick="showPage('about')">About Us</a></li>
+        <li><a id="nav-packages" onclick="showPage('packages')">Packages</a></li>
+        <li><a id="nav-facilities" onclick="showPage('facilities')">Facilities</a></li>
+        <li><a id="nav-contact" onclick="showPage('contact')">Contact Us</a></li>
+      </ul>
+    </nav>
+
+    <button class="btn-book-nav" onclick="bookPackage('General Booking Enquiry')">Book Now &rarr;</button>
+  </header>
+
+  <main id="main-content">
+
+    <!-- PAGE 1: HOME -->
+    <section id="page-home" class="page-section active">
+      <div class="hero-banner">
+        <div class="hero-grid">
+          <div>
+            <h1>Welcome to SkyNest</h1>
+            <p class="subtitle">Modern Co-Living Spaces in Singapore</p>
+            <p class="tagline">Live. Work. Connect.</p>
+            <div class="hero-buttons">
+              <button class="btn-primary" onclick="showPage('packages')">View Packages &rarr;</button>
+              <button class="btn-outline" onclick="showPage('contact')">Contact Us</button>
+            </div>
+          </div>
+          <img class="hero-img" src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=900&q=80" alt="Modern SkyNest co-living residential towers by the waterfront in Singapore">
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="two-col">
+          <div>
+            <h2 class="section-heading">About SkyNest</h2>
+            <p>SkyNest Co-Living Spaces provides modern, affordable and flexible accommodation for young professionals, international students and digital nomads.</p>
+            <div class="mini-features">
+              <div class="mini-feature-item">
+                <span>📶</span>
+                <strong>High-Speed Wi-Fi</strong>
+              </div>
+              <div class="mini-feature-item">
+                <span>👥</span>
+                <strong>Shared Spaces</strong>
+              </div>
+              <div class="mini-feature-item">
+                <span>📍</span>
+                <strong>Prime Location</strong>
+              </div>
+            </div>
+          </div>
+          <img class="content-img" src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=900&q=80" alt="Bright furnished SkyNest studio apartment with living area and city view">
+        </div>
+        <div class="script-banner">Live Better Together</div>
+      </div>
+    </section>
+
+    <!-- PAGE 2: ABOUT US -->
+    <section id="page-about" class="page-section">
+      <div class="hero-banner">
+        <div class="hero-grid">
+          <div>
+            <h1>About Us</h1>
+            <p class="subtitle">Our Home. Your Community.</p>
+          </div>
+          <img class="hero-img" src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=900&q=80" alt="SkyNest communal living room with modern seating and indoor plants">
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="two-col">
+          <div>
+            <h2 class="section-heading">Who We Are?</h2>
+            <p>SkyNest Co-Living Spaces is a modern accommodation company based in Singapore. We provide stylish rooms and apartments designed for young professionals, international students and digital nomads.</p>
+
+            <h2 class="section-heading" style="margin-top:1.8rem;">Our Benefits</h2>
+            <ul class="benefits-list">
+              <li><span class="check-circle">✓</span> Flexible stay options</li>
+              <li><span class="check-circle">✓</span> Modern facilities</li>
+              <li><span class="check-circle">✓</span> Supportive community</li>
+              <li><span class="check-circle">✓</span> Prime location in Singapore</li>
+            </ul>
+          </div>
+          <div>
+            <img class="content-img" src="https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=900&q=80" alt="Singapore Marina Bay skyline near SkyNest co-living residences">
+            <div class="script-banner">Live Better Together</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 3: PACKAGES -->
+    <section id="page-packages" class="page-section">
+      <div class="hero-banner">
+        <div class="hero-grid">
+          <div>
+            <h1>Our Packages</h1>
+            <p class="subtitle">Choose the perfect stay for you</p>
+          </div>
+          <img class="hero-img" src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=900&q=80" alt="Comfortable SkyNest bedroom suite with modern decor">
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="packages-grid">
+          <article class="package-card">
+            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=600&q=80" alt="Premium Stay private studio apartment">
+            <div class="package-body">
+              <h3>Premium Stay</h3>
+              <ul>
+                <li>Private studio apartment</li>
+                <li>Weekly cleaning</li>
+                <li>Access to all facilities</li>
+              </ul>
+              <button class="btn-card" onclick="bookPackage('Premium Stay')">Book Now</button>
+            </div>
+          </article>
+
+          <article class="package-card">
+            <img src="https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=600&q=80" alt="Standard Stay private bedroom in shared apartment">
+            <div class="package-body">
+              <h3>Standard Stay</h3>
+              <ul>
+                <li>Private bedroom in shared apartment</li>
+                <li>Fortnightly cleaning</li>
+                <li>Shared kitchen & lounge</li>
+              </ul>
+              <button class="btn-card" onclick="bookPackage('Standard Stay')">Book Now</button>
+            </div>
+          </article>
+
+          <article class="package-card">
+            <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=600&q=80" alt="Short-Term Stay fully furnished room">
+            <div class="package-body">
+              <h3>Short-Term Stay</h3>
+              <ul>
+                <li>Flexible booking (1–4 weeks)</li>
+                <li>Fully furnished room</li>
+                <li>All utilities included</li>
+              </ul>
+              <button class="btn-card" onclick="bookPackage('Short-Term Stay')">Book Now</button>
+            </div>
+          </article>
+
+          <article class="package-card">
+            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80" alt="Custom Packages for corporate teams and groups">
+            <div class="package-body">
+              <h3>Custom Packages</h3>
+              <ul>
+                <li>For companies & groups</li>
+                <li>Accessibility options</li>
+                <li>Tailored lease terms</li>
+              </ul>
+              <button class="btn-card" onclick="bookPackage('Custom Packages')">Book Now</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 4: FACILITIES -->
+    <section id="page-facilities" class="page-section">
+      <div class="hero-banner">
+        <div class="hero-grid">
+          <div>
+            <h1>Our Facilities</h1>
+            <p class="subtitle">Everything you need in one place</p>
+          </div>
+          <img class="hero-img" src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=900&q=80" alt="Modern fitness gym and cardio equipment at SkyNest">
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="facilities-layout">
+          <div class="facilities-grid">
+            <div class="facility-box">
+              <span class="icon">📶</span>
+              <strong>High-Speed Wi-Fi</strong>
+            </div>
+            <div class="facility-box">
+              <span class="icon">💻</span>
+              <strong>Co-Working Spaces</strong>
+            </div>
+            <div class="facility-box">
+              <span class="icon">🍴</span>
+              <strong>Communal Kitchen</strong>
+            </div>
+            <div class="facility-box">
+              <span class="icon">🧺</span>
+              <strong>Laundry Rooms</strong>
+            </div>
+            <div class="facility-box">
+              <span class="icon">🌿</span>
+              <strong>Rooftop Garden</strong>
+            </div>
+            <div class="facility-box">
+              <span class="icon">🏋️</span>
+              <strong>Gym & Yoga Studio</strong>
+            </div>
+            <div class="facility-box">
+              <span class="icon">🛋️</span>
+              <strong>Social Lounge</strong>
+            </div>
+            <div class="facility-box">
+              <span class="icon">📖</span>
+              <strong>Study Pods</strong>
+            </div>
+          </div>
+
+          <img class="content-img" style="height:100%; min-height:280px;" src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80" alt="SkyNest rooftop garden lounge overlooking the Singapore skyline">
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 5: CONTACT US -->
+    <section id="page-contact" class="page-section">
+      <div class="hero-banner">
+        <div class="hero-grid">
+          <div>
+            <h1>Contact Us</h1>
+            <p class="subtitle">We'd love to hear from you!</p>
+            <p>Get in touch with us for any questions, more information or booking enquiries.</p>
+          </div>
+          <img class="hero-img" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=900&q=80" alt="SkyNest Marina Boulevard office and co-living tower">
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="contact-grid">
+          <div>
+            <div class="pill-header">Our Contact Details</div>
+
+            <div class="contact-item">
+              <div class="contact-badge" aria-hidden="true">📍</div>
+              <div>
+                <strong>Our Office</strong>
+                <p>1 Marina Boulevard,<br>Singapore 018899</p>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-badge" aria-hidden="true">📞</div>
+              <div>
+                <strong>Phone</strong>
+                <p>+65 6789 1234</p>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-badge" aria-hidden="true">✉️</div>
+              <div>
+                <strong>Email</strong>
+                <p>hello@skynest.sg</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="pill-header">Send Us a Message</div>
+            <form id="contactForm" onsubmit="handleFormSubmit(event)" novalidate>
+              <div class="form-group">
+                <label for="userName">Name *</label>
+                <input type="text" id="userName" name="userName" required placeholder="Enter your full name">
+              </div>
+
+              <div class="form-group">
+                <label for="userEmail">Email Address *</label>
+                <input type="email" id="userEmail" name="userEmail" required placeholder="you@example.com">
+              </div>
+
+              <div class="form-group">
+                <label for="packageSelect">Package / Enquiry Type</label>
+                <select id="packageSelect" name="packageSelect">
+                  <option value="General Booking Enquiry">General Booking Enquiry</option>
+                  <option value="Premium Stay">Premium Stay</option>
+                  <option value="Standard Stay">Standard Stay</option>
+                  <option value="Short-Term Stay">Short-Term Stay</option>
+                  <option value="Custom Packages">Custom Packages</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="userMessage">Your Message *</label>
+                <textarea id="userMessage" name="userMessage" rows="4" required placeholder="Your Message..."></textarea>
+              </div>
+
+              <button type="submit" class="btn-submit">Submit</button>
+              <div id="formFeedback" role="status" aria-live="polite"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <p><strong>SkyNest</strong> &ndash; <em>Live Better Together</em></p>
+      <div class="social-links" aria-label="Social Media Links">
+        <span title="Facebook">f</span>
+        <span title="Instagram">ig</span>
+        <span title="LinkedIn">in</span>
+        <span title="YouTube">yt</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function showPage(pageId) {
+      document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+      document.querySelectorAll('nav a').forEach(link => link.classList.remove('active'));
+
+      document.getElementById('page-' + pageId).classList.add('active');
+      const activeNav = document.getElementById('nav-' + pageId);
+      if (activeNav) activeNav.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function bookPackage(packageName) {
+      showPage('contact');
+      const select = document.getElementById('packageSelect');
+      select.value = packageName;
+    }
+
+    let isLargeText = false;
+    function toggleLargeText() {
+      isLargeText = !isLargeText;
+      document.body.style.fontSize = isLargeText ? '118%' : '100%';
+    }
+
+    function toggleHighContrast() {
+      document.body.classList.toggle('high-contrast');
+    }
+
+    function handleFormSubmit(event) {
+      event.preventDefault();
+      const name = document.getElementById('userName').value.trim();
+      const email = document.getElementById('userEmail').value.trim();
+      const pkg = document.getElementById('packageSelect').value;
+      const msg = document.getElementById('userMessage').value.trim();
+      const feedback = document.getElementById('formFeedback');
+
+      feedback.style.display = 'block';
+
+      if (!name || !email || !msg) {
+        feedback.style.background = '#fde8e8';
+        feedback.style.color = '#9b1c1c';
+        feedback.textContent = 'Error: Please fill in your Name, Email Address, and Message.';
+        return;
+      }
+
+      if (!email.includes('@') || !email.includes('.')) {
+        feedback.style.background = '#fde8e8';
+        feedback.style.color = '#9b1c1c';
+        feedback.textContent = 'Error: Please enter a valid email address (e.g., name@example.com).';
+        return;
+      }
+
+      feedback.style.background = '#def7ec';
+      feedback.style.color = '#03543f';
+      feedback.textContent = 'Thank you, ' + name + '! Your enquiry for "' + pkg + '" has been sent to SkyNest.';
+      document.getElementById('contactForm').reset();
+    }
+  </script>
+
+</body>
+</html>
